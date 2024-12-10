@@ -49,3 +49,6 @@ def editp(req):
 
 def delp(req):
     return render(req,'shop/deleteproduct.html')
+
+def update_banner(req):
+    return render(req,'shop/dash.html')

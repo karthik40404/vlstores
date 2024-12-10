@@ -4,9 +4,10 @@ from .import views
 urlpatterns = [
     path('',views.log),
     path('register',views.reg),
-    path('lout',views.lout),
+    path('lout',views.lout, name='lout'),
     path('admdash',views.admdash),
-    path('add/',views.addp),
-    path('edit/',views.editp),
-    path('dele/',views.delp),
+    path('add/',views.addp, name='add'),
+    path('edit/',views.editp, name='edit'),
+    path('dele/',views.delp, name='dele'),
+    path('upb/',views.update_banner, name='upb'),
 ]
