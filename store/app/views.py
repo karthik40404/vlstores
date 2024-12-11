@@ -1,7 +1,8 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.models import User
 from django.contrib import messages
+from .models import *
 
 # Create your views here.
 def log(req):
@@ -42,7 +43,12 @@ def lout(req):
      return redirect(log)
 
 def addp(req):
-    return render(req,'shop/addproduct.html')
+    if 'shop' in req.session:
+        if req.method == 'POST':
+            pass
+        categories = Category.objects.all()
+        return render(req, 'shop/addproduct.html', {'categories': categories})
+    return redirect(log)
 
 def editp(req):
     return render(req,'shop/editproduct.html')
@@ -52,3 +58,28 @@ def delp(req):
 
 def update_banner(req):
     return render(req,'shop/dash.html')
+
+def add_cat(req):
+    if 'shop' in req.session:
+        if req.method=='POST':
+            cat_name=req.POST['category_name']
+            cat_name=cat_name.lower()
+            try:
+                data=Category.objects.get(name=cat_name)
+            except:
+                data= Category.objects.create(cat_name=cat_name)
+                data.save()
+                print(data)
+            return redirect(addp)
+        categories= Category.objects.all
+        return render(req,'shop/addcategory.html',{'categories':categories})
+    else:
+        return render(log)
+    
+def dele_cat(req,cat_id):
+    if 'shop' in req.session:
+        category = get_object_or_404(Category, id=cat_id)
+        category.delete()
+        messages.success(req, "Category deleted successfully.")
+        return redirect(add_cat)
+    return redirect(log) 

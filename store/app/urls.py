@@ -10,4 +10,6 @@ urlpatterns = [
     path('edit/',views.editp, name='edit'),
     path('dele/',views.delp, name='dele'),
     path('upb/',views.update_banner, name='upb'),
+    path('addcat/',views.add_cat, name='addcat'),
+    path('delecat/<int:cat_id>/',views.dele_cat, name='delecat'),
 ]

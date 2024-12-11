@@ -62,26 +62,29 @@
         <h2>Add Product</h2>
         <form action="" method="POST" enctype="multipart/form-data">
             <div class="form-group">
+                <label for="name">Product ID *</label>
+                <input type="text" id="id" name="id" placeholder="Enter product id" required>
+            </div>
+            <div class="form-group">
                 <label for="name">Product Name *</label>
                 <input type="text" id="name" name="name" placeholder="Enter product name" required>
             </div>
             <div class="form-group">
                 <label for="category">Category *</label>
-                <select id="category" name="category" required>
-                    <option value="">Select category</option>
-                    <option value="groceries">Groceries</option>
-                    <option value="beverages">Beverages</option>
-                    <option value="snacks">Snacks</option>
-                    <option value="others">Others</option>
+                <select id="category" name="category_name" required>
+                    <option value="" disabled selected>Select a Category</option>
+                    {% for c in categories %}
+                        <option value="{{ c.cat_name }}">{{ c.cat_name }}</option>
+                    {% endfor %}
                 </select>
-            </div>
+            </div>                       
             <div class="form-group">
                 <label for="price">Price (₹) *</label>
                 <input type="number" id="price" name="price" step="0.01" placeholder="Enter price" required>
             </div>
             <div class="form-group">
-                <label for="quantity">Quantity *</label>
-                <input type="number" id="quantity" name="quantity" placeholder="Enter quantity" required>
+                <label for="price">Offer_Price (₹) *</label>
+                <input type="number" id="offer_price" name="offer_price" step="0.01" placeholder="Enter offer_price" required>
             </div>
             <div class="form-group">
                 <label for="description">Description</label>
