@@ -16,5 +16,5 @@ class Product(models.Model):
 class Weight(models.Model):
      product=models.ForeignKey(Product,on_delete=models.CASCADE)
      product_weight=models.TextField()
-     stock=models.IntegerField
+     stock=models.IntegerField()
 

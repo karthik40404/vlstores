@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.models import User
 from django.contrib import messages
 from .models import *
+import os
 
 # Create your views here.
 def log(req):
@@ -45,16 +46,58 @@ def lout(req):
 def addp(req):
     if 'shop' in req.session:
         if req.method == 'POST':
-            pass
+            pid=req.POST['pid']
+            name=req.POST['name']
+            disc=req.POST['disc']
+            price=req.POST['price']
+            offer_price=req.POST['offer_price']
+            file=req.FILES['img']
+            cat_id=req.POST['cat_id']
+            cate=Category.objects.get(pk=cat_id)
+            data=Product.objects.create(pid=pid,name=name,disc=disc,price=price,offer_price=offer_price,img=file,cat_id=cate)
+            data.save()
+            return redirect(viewp)
+        pass
         categories = Category.objects.all()
         return render(req, 'shop/addproduct.html', {'categories': categories})
     return redirect(log)
 
-def editp(req):
-    return render(req,'shop/editproduct.html')
+def editp(req,pid):
+    if 'shop' in req.session:
+        if req.method=='POST':
+            name=req.POST['name']
+            disc=req.POST['disc']
+            price=req.POST['price']
+            offer_price=req.POST['offer_price']
+            file=req.FILES.get('img')
+            if file:
+                Product.objects.filter(pk=pid).update(name=name,disc=disc,price=price,offer_price=offer_price)
+                data=Product.objects.get(pk=pid)
+                data.img=file
+                data.save()
+            else: 
+                Product.objects.filter(pid=pid).update(name=name,disc=disc,price=price,offer_price=offer_price)
+            return redirect (admdash)
+        else:
+            data=Product.objects.get(pid=pid)
+            return render(req,'shop/editproduct.html',{'data':data})
 
-def delp(req):
-    return render(req,'shop/deleteproduct.html')
+def viewp(req):
+    category_id = req.GET.get('category', None)
+    categories = Category.objects.all()
+    if category_id:
+        products = Product.objects.filter(cat_id=category_id)
+    else:
+        products = Product.objects.all()
+    return render(req,'shop/viewproduct.html', {'products': products,'categories': categories,})
+
+def delp(req,pid):
+    data=Product.objects.get(pid=pid)
+    file=data.img.url
+    file=file.split('/')[-1]
+    os.remove('media/'+file)
+    data.delete()
+    return redirect(admdash)
 
 def update_banner(req):
     return render(req,'shop/dash.html')
@@ -80,6 +123,5 @@ def dele_cat(req,cat_id):
     if 'shop' in req.session:
         category = get_object_or_404(Category, id=cat_id)
         category.delete()
-        messages.success(req, "Category deleted successfully.")
         return redirect(add_cat)
     return redirect(log) 

@@ -7,9 +7,10 @@ urlpatterns = [
     path('lout',views.lout, name='lout'),
     path('admdash',views.admdash),
     path('add/',views.addp, name='add'),
-    path('edit/',views.editp, name='edit'),
-    path('dele/',views.delp, name='dele'),
+    path('edit/<str:pid>/', views.editp),
+    path('dele/<pid>',views.delp, name='dele'),
     path('upb/',views.update_banner, name='upb'),
     path('addcat/',views.add_cat, name='addcat'),
     path('delecat/<int:cat_id>/',views.dele_cat, name='delecat'),
+    path('viewproduct', views.viewp),
 ]

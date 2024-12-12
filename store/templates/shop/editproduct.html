@@ -64,35 +64,33 @@
             {% csrf_token %}
             <div class="form-group">
                 <label for="name">Product ID *</label>
-                <input type="text" id="id" name="id" value="{{ product.id }}" required>
+                <input type="text" id="pid" name="pid" value="{{ data.pid }}" required>
             </div>
             <div class="form-group">
                 <label for="name">Product Name *</label>
-                <input type="text" id="name" name="name" value="{{ product.name }}" required>
+                <input type="text" id="name" name="name" value="{{ data.name }}" required>
             </div>
             <div class="form-group">
                 <label for="category">Category *</label>
-                <select id="category" name="category" required>
-                    {% for category in categories %}
-                        <option value="{{ category }}" {% if product.category == category %}selected{% endif %}>
-                            {{ category|title }}
-                        </option>
-                    {% endfor %}
-                </select>                
-            </div>
+                <input type="text" id="category" name="category" value="{{ data.cat_id.cat_name }}" required>
+            </div>            
             <div class="form-group">
                 <label for="price">Price (₹) *</label>
-                <input type="number" id="price" name="price" value="{{ product.price }}" step="0.01" required>
+                <input type="number" id="price" name="price" value="{{ data.price }}" step="0.01" required>
+            </div>
+            <div class="form-group">
+                <label for="price">Offer Price (₹) *</label>
+                <input type="number" id="offer_price" name="offer_price" value="{{ data.offer_price }}" step="0.01" required>
             </div>
             <div class="form-group">
                 <label for="description">Description</label>
-                <textarea id="description" name="description" rows="3">{{ product.description }}</textarea>
+                <textarea id="disc" name="disc" rows="3">{{ data.disc }}</textarea>
             </div>
             <div class="form-group">
-                <label for="image">Product Image</label>
-                <input type="file" id="image" name="image" accept="image/*">
-                {% if product.image %}
-                    <p>Current Image: <img src="{{ product.image.url }}" alt="{{ product.name }}" style="max-width: 100px;"></p>
+                <label for="img">Product Image</label>
+                <input type="file" id="img" name="img" accept="image/*">
+                {% if data.img %}
+                    <p>Current Image: <img src="{{ data.img.url }}" alt="{{ data.name }}" style="max-width: 100px;"></p>
                 {% endif %}
             </div>
             <button type="submit" class="btn">Update Product</button>
