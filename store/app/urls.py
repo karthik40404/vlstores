@@ -3,7 +3,7 @@ from .import views
 
 urlpatterns = [
     path('',views.log),
-    path('register',views.reg),
+    path('register',views.reg ,name='register'),
     path('lout',views.lout, name='lout'),
     path('admdash',views.admdash),
     path('add/',views.addp, name='add'),
@@ -13,4 +13,5 @@ urlpatterns = [
     path('addcat/',views.add_cat, name='addcat'),
     path('delecat/<int:cat_id>/',views.dele_cat, name='delecat'),
     path('viewproduct', views.viewp),
+    path('u_home',views.uhome, name='u-home'),
 ]

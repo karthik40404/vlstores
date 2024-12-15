@@ -9,6 +9,8 @@ import os
 def log(req):
     if 'shop' in req.session:
         return redirect(admdash)
+    if 'user' in req.session:
+        return redirect (uhome)
     if req.method=="POST":
         email = req.POST['email']
         psw = req.POST['psw']
@@ -17,8 +19,11 @@ def log(req):
         if data:
             login(req, data)
             if data.is_superuser:
-                req.session['shop'] = email
+                req.session['shop']=email
                 return redirect(admdash)
+            else:
+                req.session['user']=email
+                return redirect(uhome)
         else:
             messages.warning(req, "Incorrect username or password.")
             return redirect(log) 
@@ -29,7 +34,7 @@ def reg(req):
         name=req.POST['name']
         email=req.POST['email']
         psw=req.POST['psw']
-        data=User.objects.create_user(username=name,email=email,password=psw)
+        data=User.objects.create_user(first_name=name,email=email,username=email,password=psw)
         data.save()
         return redirect(log)
     else:
@@ -125,3 +130,11 @@ def dele_cat(req,cat_id):
         category.delete()
         return redirect(add_cat)
     return redirect(log) 
+
+def uhome(req):
+        if 'user' in req.session:
+            return render(req,'user/userhome.html')
+        return redirect(log)
+         
+       
+   
