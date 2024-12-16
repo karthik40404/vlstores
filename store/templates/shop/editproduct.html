@@ -87,6 +87,14 @@
                 <textarea id="disc" name="disc" rows="3">{{ data.disc }}</textarea>
             </div>
             <div class="form-group">
+                <label for="stock">Stock</label>
+                <input type="text" id="stock" name="stock" value="{{ data.stock }}" required>
+            </div>
+            <div class="form-group">
+                <label for="productweight">Weight</label>
+                <input type="text" id="weight" name="weight" value="{{ data.weight }}" required>
+            </div>
+            <div class="form-group">
                 <label for="img">Product Image</label>
                 <input type="file" id="img" name="img" accept="image/*">
                 {% if data.img %}

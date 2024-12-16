@@ -61,7 +61,7 @@ def addp(req):
             cate=Category.objects.get(pk=cat_id)
             data=Product.objects.create(pid=pid,name=name,disc=disc,price=price,offer_price=offer_price,img=file,cat_id=cate)
             data.save()
-            return redirect(viewp)
+            return redirect(addws)
         pass
         categories = Category.objects.all()
         return render(req, 'shop/addproduct.html', {'categories': categories})
@@ -74,14 +74,16 @@ def editp(req,pid):
             disc=req.POST['disc']
             price=req.POST['price']
             offer_price=req.POST['offer_price']
+            stock=req.POST['stock']
+            product_weight=req.POST['weight']
             file=req.FILES.get('img')
             if file:
-                Product.objects.filter(pk=pid).update(name=name,disc=disc,price=price,offer_price=offer_price)
+                Product.objects.filter(pk=pid).update(name=name,disc=disc,price=price,offer_price=offer_price,stock=stock,product_weight=product_weight)
                 data=Product.objects.get(pk=pid)
                 data.img=file
                 data.save()
             else: 
-                Product.objects.filter(pid=pid).update(name=name,disc=disc,price=price,offer_price=offer_price)
+                Product.objects.filter(pid=pid).update(name=name,disc=disc,price=price,offer_price=offer_price,stock=stock,product_weight=product_weight)
             return redirect (admdash)
         else:
             data=Product.objects.get(pid=pid)
@@ -126,7 +128,7 @@ def add_cat(req):
     
 def dele_cat(req,cat_id):
     if 'shop' in req.session:
-        category = get_object_or_404(Category, id=cat_id)
+        category = get_object_or_404(Category,pid=cat_id)
         category.delete()
         return redirect(add_cat)
     return redirect(log) 
@@ -136,5 +138,16 @@ def uhome(req):
             return render(req,'user/userhome.html')
         return redirect(log)
          
-       
-   
+def addws(req):
+    if 'shop' in req.session:
+        if req.method=='POST':
+            stock=req.POST['stock']
+            product_weight=req.POST['weight']
+            product=req.POST['productname']
+            pw=Product.objects.get(pk=product)
+            data=Weight.objects.create(stock=stock,product_weight=product_weight,product=pw)
+            data.save()
+            return redirect(viewp)
+        products=Product.objects.all()
+        return render(req, 'shop/addweight.html',{'products':products})
+    return redirect(log)

@@ -14,4 +14,5 @@ urlpatterns = [
     path('delecat/<int:cat_id>/',views.dele_cat, name='delecat'),
     path('viewproduct', views.viewp),
     path('u_home',views.uhome, name='u-home'),
+    path('addw',views.addws)
 ]
