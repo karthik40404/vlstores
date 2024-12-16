@@ -67,27 +67,31 @@ def addp(req):
         return render(req, 'shop/addproduct.html', {'categories': categories})
     return redirect(log)
 
-def editp(req,pid):
+def editp(req, pid):
     if 'shop' in req.session:
-        if req.method=='POST':
-            name=req.POST['name']
-            disc=req.POST['disc']
-            price=req.POST['price']
-            offer_price=req.POST['offer_price']
-            stock=req.POST['stock']
-            product_weight=req.POST['weight']
-            file=req.FILES.get('img')
+        if req.method == 'POST':
+            name = req.POST['name']
+            disc = req.POST['disc']
+            price = req.POST['price']
+            offer_price = req.POST['offer_price']
+            file = req.FILES.get('img')
             if file:
-                Product.objects.filter(pk=pid).update(name=name,disc=disc,price=price,offer_price=offer_price,stock=stock,product_weight=product_weight)
-                data=Product.objects.get(pk=pid)
-                data.img=file
+                Product.objects.filter(pid=pid).update(name=name, disc=disc, price=price, offer_price=offer_price)
+                data = Product.objects.get(pid=pid)
+                data.img = file
                 data.save()
-            else: 
-                Product.objects.filter(pid=pid).update(name=name,disc=disc,price=price,offer_price=offer_price,stock=stock,product_weight=product_weight)
-            return redirect (admdash)
+            else:
+                Product.objects.filter(pid=pid).update(name=name, disc=disc, price=price, offer_price=offer_price)
+            weight_instance = Weight.objects.filter(product__pid=pid).first()
+            if weight_instance:
+                return redirect('edit_weight', pid=pid) 
+            else:
+                return redirect('add_weight', pid=pid)
         else:
-            data=Product.objects.get(pid=pid)
-            return render(req,'shop/editproduct.html',{'data':data})
+            data = get_object_or_404(Product, pid=pid)
+            return render(req, 'shop/editproduct.html', {'data': data})
+    return redirect('log')
+
 
 def viewp(req):
     category_id = req.GET.get('category', None)
@@ -151,3 +155,21 @@ def addws(req):
         products=Product.objects.all()
         return render(req, 'shop/addweight.html',{'products':products})
     return redirect(log)
+
+def editws(req, pid):
+    if 'shop' in req.session:
+        data = get_object_or_404(Weight, product__pid=pid)
+
+        if req.method == 'POST':
+            product_weight = req.POST['product_weight']
+            stock = req.POST['stock']
+            data.product_weight = product_weight
+            data.stock = stock
+            data.save()
+            return redirect(viewp) 
+
+        return render(req, 'shop/editweight.html', {'data': data})
+
+    return redirect('log')
+
+
