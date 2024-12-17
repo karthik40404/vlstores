@@ -3,163 +3,240 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grocery Store - Home</title>
     {% load static %}
+    <title>Provision Store</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    
     <style>
+        /* General Styles */
         body {
-            background-color: #eaf4ea;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: rgb(94, 182, 86);
+        }
+        header {
+            background-color: #f56c0a;
+            color: white;
+            padding: 10px 20px;
         }
         .navbar {
-            background-color: #006400;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        .navbar .navbar-brand, .navbar .nav-link {
-            color: #fff !important;
+        .search-bar input {
+            padding: 8px;
+            border: none;
+            border-radius: 4px;
         }
-        .hero {
-            background-color: #008000;
+        .banners {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
         }
-        .btn-primary {
-            background-color: #228b22;
-            border-color: #228b22;
+        .banner {
+            background-color: #ffd700;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px;
+            font-weight: bold;
         }
-        .btn-outline-success {
-            color: #006400;
-            border-color: #006400;
+        .categories h2, .product-list h2 {
+            text-align: center;
+            margin: 20px 0;
         }
-        .btn-outline-success:hover {
-            background-color: #006400;
-            color: #fff;
+        .category-grid, .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 0 20px 20px;
+        }
+        .category-item, .product-card {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            text-align: center;
+            padding: 10px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .category-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .category-item img {
+            width: 80px;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .category-item p {
+            margin: 0;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .category-item:hover {
+            transform: scale(1.05);
+        }
+
+
+        .product-card img {
+            width: 100px;
+            height: auto;
+        }
+        .product-card button {
+            background-color: #f56c0a;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .product-card button:hover {
+            background-color: #d84f09;
         }
         footer {
-            background-color: #006400;
+            background-color: #222;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .footer-content {
+            display: flex;
+            justify-content: space-around;
+        }
+        .footer-column h3 {
+            margin-bottom: 10px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar, .banners {
+                flex-direction: column;
+                text-align: center;
+            }
+            .footer-content {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <img src="{% static 'img/V.L.png' %}" alt="l" width="100" height="100" class="d-inline-block align-text-bottom"></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#categories">Categories</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#featured">Featured</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-                    <li class="nav-item"><a class="nav-link" href="lout">Logout</a></li>
-                </ul>
+    <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">vl stores</div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search for products...">
+                <button style="height: 45px; width: 45px; border-radius: 8px;">🔍</button>
+            </div>
+            <div class="user-options">
+                <a href="#" class="cart-btn">🛒 Cart</a>
+                <a href="#" class="cart-btn">🛒 Cart</a>
+                <a href="#" class="cart-btn">🛒 Cart</a>
+                <a href="#" class="cart-btn">🛒 Cart</a>
+                <a href="#" class="cart-btn">🛒 Cart</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Offer Banners -->
+    <section class="banners">
+        <div class="banner">UPTO 25% OFF</div>
+        <div class="banner">UPTO 19% OFF</div>
+        <div class="banner">UPTO 10% OFF</div>
+        <div class="banner">UPTO 50% OFF</div>
+    </section>
+
+    <!-- Shop By Category -->
+    <section class="categories">
+        <h2>Shop By Category</h2>
+        <div class="category-grid">
+            <div class="category-item">
+                <img src="{% static 'images/fruits.png' %}" alt="Fruits & Vegetables">
+                <p>Fruits & Vegetables</p>
+            </div>
+            <div class="category-item">
+                <img src="{% static 'images/meat.png' %}" alt="Meat & Eggs">
+                <p>Meat & Eggs</p>
+            </div>
+            <div class="category-item">
+                <img src="{% static 'images/grains.png' %}" alt="Sugar, Salt & Grains">
+                <p>Sugar, Salt & Grains</p>
+            </div>
+            <div class="category-item">
+                <img src="{% static 'images/oil.png' %}" alt="Oil, Spices & Pickles">
+                <p>Oil, Spices & Pickles</p>
+            </div>
+            <div class="category-item">
+                <img src="{% static 'images/bakery.png' %}" alt="Bakery & Dairy">
+                <p>Bakery & Dairy</p>
+            </div>
+            <div class="category-item">
+                <img src="{% static 'images/snacks.png' %}" alt="Snacks & Foods">
+                <p>Snacks & Foods</p>
+            </div>
+            <div class="category-item">
+                <img src="{% static 'images/beverages.png' %}" alt="Beverages & Drinks">
+                <p>Beverages & Drinks</p>
+            </div>
+            <div class="category-item">
+                <img src="{% static 'images/personalcare.png' %}" alt="Personal Care">
+                <p>Personal Care</p>
+            </div>
+            <div class="category-item">
+                <img src="{% static 'images/household.png' %}" alt="Household">
+                <p>Household</p>
             </div>
         </div>
-    </nav>
-    <!-- Hero Section -->
-    <section class="hero text-white text-center py-5">
-        <div class="container">
-            <h1>Welcome to Our Grocery Store</h1>
-            <p class="lead">Fresh groceries delivered to your doorstep!</p>
-            <a href="#categories" class="btn btn-light btn-lg">Shop Now</a>
-        </div>
-    </section>
-    <!-- Categories Section -->
-    <section id="categories" class="py-5">
-        <div class="container">
-            <h2 class="text-center mb-4">Product Categories</h2>
-            <div class="row">
-                <div class="col-md-4 mb-3">
-                    <div class="card">
-                        <img src="/static/images/fruits.jpg" class="card-img-top" alt="Fruits">
-                        <div class="card-body">
-                            <h5 class="card-title">Fruits</h5>
-                            <p class="card-text">Fresh and organic fruits.</p>
-                            <a href="#" class="btn btn-primary">View More</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <div class="card">
-                        <img src="/static/images/vegetables.jpg" class="card-img-top" alt="Vegetables">
-                        <div class="card-body">
-                            <h5 class="card-title">Vegetables</h5>
-                            <p class="card-text">Green and healthy vegetables.</p>
-                            <a href="#" class="btn btn-primary">View More</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <div class="card">
-                        <img src="/static/images/snacks.jpg" class="card-img-top" alt="Snacks">
-                        <div class="card-body">
-                            <h5 class="card-title">Snacks</h5>
-                            <p class="card-text">Tasty and crunchy snacks.</p>
-                            <a href="#" class="btn btn-primary">View More</a>
-                        </div>
-                    </div>
-                </div>
+    </section>    
+
+    <!-- Product Listings -->
+    <section class="product-list">
+        <h2>Sugar, Salt & Grains</h2>
+        <div class="product-grid">
+            <div class="product-card">
+                <img src="{% static 'images/product1.png' %}" alt="Product Image">
+                <p>Foodro Natural Uzhunnu</p>
+                <p>500 gm - ₹87.4</p>
+                <button>Add</button>
             </div>
-        </div>
-    </section>
-    <!-- Featured Products Section -->
-    <section id="featured" class="py-5 bg-light">
-        <div class="container">
-            <h2 class="text-center mb-4">Featured Products</h2>
-            <div class="row">
-                <div class="col-md-3 mb-3">
-                    <div class="card">
-                        <img src="/static/images/milk.jpg" class="card-img-top" alt="Milk">
-                        <div class="card-body">
-                            <h5 class="card-title">Fresh Milk</h5>
-                            <p class="card-text">$2.99 per liter</p>
-                            <a href="#" class="btn btn-outline-success">Add to Cart</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 mb-3">
-                    <div class="card">
-                        <img src="/static/images/bread.jpg" class="card-img-top" alt="Bread">
-                        <div class="card-body">
-                            <h5 class="card-title">Whole Wheat Bread</h5>
-                            <p class="card-text">$1.99 per loaf</p>
-                            <a href="#" class="btn btn-outline-success">Add to Cart</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 mb-3">
-                    <div class="card">
-                        <img src="/static/images/eggs.jpg" class="card-img-top" alt="Eggs">
-                        <div class="card-body">
-                            <h5 class="card-title">Farm Eggs</h5>
-                            <p class="card-text">$3.99 per dozen</p>
-                            <a href="#" class="btn btn-outline-success">Add to Cart</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 mb-3">
-                    <div class="card">
-                        <img src="/static/images/cheese.jpg" class="card-img-top" alt="Cheese">
-                        <div class="card-body">
-                            <h5 class="card-title">Cheddar Cheese</h5>
-                            <p class="card-text">$4.99 per pack</p>
-                            <a href="#" class="btn btn-outline-success">Add to Cart</a>
-                        </div>
-                    </div>
-                </div>
+            <div class="product-card">
+                <img src="{% static 'images/product2.png' %}" alt="Product Image">
+                <p>Foodro Basmati Rice</p>
+                <p>1 kg - ₹120.5</p>
+                <button>Add</button>
             </div>
         </div>
     </section>
+
     <!-- Footer -->
-    <footer class="bg-dark text-white text-center py-3">
-        <div class="container">
-            <p>&copy; 2024 Grocery Store. All Rights Reserved.</p>
-            <p>Follow us on 
-                <a href="#" class="text-white ">Facebook</a>, 
-                <a href="#" class="text-white">Twitter</a>, and 
-                <a href="#" class="text-white">Instagram</a>.</p>
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>INFORMATION</h3>
+                <p>Terms & Conditions</p>
+                <p>Privacy Policy</p>
+                <p>Contact Us</p>
+            </div>
+            <div class="footer-column">
+                <h3>CATEGORIES</h3>
+                <p>Fruits & Vegetables</p>
+                <p>Meat & Eggs</p>
+                <p>Bakery & Dairy</p>
+            </div>
         </div>
+        <p>&copy; 2024 vl stores</p>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

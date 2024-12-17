@@ -16,4 +16,6 @@ urlpatterns = [
     path('u_home',views.uhome, name='u-home'),
     path('addw', views.addws, name='add_weight'),
     path('editweight/<str:pid>/', views.editws, name='edit_weight'),
+    path('products/', views.product_list), 
+    path('category/<int:category_id>/', views.product_list),
 ]

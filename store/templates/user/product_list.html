@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+    {% load static %}
+    <style>
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        .product-card {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+            background-color: #fff;
+            border-radius: 5px;
+        }
+        .product-card img {
+            width: 100px;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Products</h1>
+        <div class="categories">
+            <h2>Categories</h2>
+            <ul>
+                <li><a href="{% url 'product_list' %}">All</a></li>
+                {% for category in categories %}
+                    <li>
+                        <a href="{% url 'product_list' category.id %}">{{ category.cat_name }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </header>
+
+    <!-- Product Listings -->
+    <section class="product-list">
+        <h2>{% if selected_category %}{{ selected_category.cat_name }}{% else %}All Products{% endif %}</h2>
+        <div class="product-grid">
+            {% for product in products %}
+                <div class="product-card">
+                    <img src="{{ product.img.url }}" alt="{{ product.name }}">
+                    <p>{{ product.name }}</p>
+                    <p>{{ product.disc }}</p>
+                    
+                    <!-- Display price details -->
+                    {% for weight in product_weights %}
+                        {% if weight.product.id == product.id %}
+                            <p>Weight: {{ weight.product_weight }}</p>
+                            <p>Price: ₹{{ weight.price }}</p>
+                            <p>Offer Price: ₹{{ weight.offer_price }}</p>
+                            <p>Stock: {{ weight.stock }}</p>
+                            <button>Add to Cart</button>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% empty %}
+                <p>No products available in this category.</p>
+            {% endfor %}
+        </div>
+    </section>
+
+</body>
+</html>
