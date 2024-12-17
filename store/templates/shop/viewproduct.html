@@ -84,8 +84,6 @@
                     <th>Image</th>
                     <th>Name</th>
                     <th>Description</th>
-                    <th>Price</th>
-                    <th>Offer Price</th>
                     <th>Category</th>
                     <th>Edit</th>
                     <th>Delete</th>
@@ -97,8 +95,6 @@
                     <td><img src="{{ product.img.url }}" style="width:100px; height:100px;"></td>
                     <td>{{ product.name }}</td>
                     <td>{{ product.disc }}</td>
-                    <td style="text-decoration: line-through;">₹{{ product.price }}</td>
-                    <td>₹{{ product.offer_price }}</td>
                     <td>{{ product.cat_id.cat_name }}</td>
                     <td><a href="edit/{{ product.pid }}" class="btn btn-primary">Edit</a></td>
                     <td><a href="dele/{{ product.pid }}" class="btn btn-danger">Delete</a></td>

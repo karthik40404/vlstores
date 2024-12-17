@@ -9,13 +9,13 @@ class Product(models.Model):
      pid=models.TextField()
      name=models.TextField()
      disc=models.TextField()
-     price=models.IntegerField()
-     offer_price=models.IntegerField()
      img=models.FileField()
      cat_id=models.ForeignKey(Category,on_delete=models.CASCADE)
 
 class Weight(models.Model):
      product=models.ForeignKey(Product,on_delete=models.CASCADE)
+     price=models.IntegerField()
+     offer_price=models.IntegerField()
      product_weight=models.TextField()
      stock=models.IntegerField()
 

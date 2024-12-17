@@ -56,23 +56,33 @@
 </head>
 <body>
     <div class="form-container">
+        {% for d in data%}
         <h2>Edit Stock and Weight</h2>
         <form action="" method="POST">
             {% csrf_token %}
             <div class="form-group">
                 <label for="product">Product</label>
-                <input type="text" id="product" name="product" value="{{ data.product.name }}" readonly>
+                <input type="text" id="product" name="product" value="{{ d.product.name }}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="price">Price (₹) *</label>
+                <input type="number" id="price" name="price" value="{{ d.price }}" required>
+            </div>
+            <div class="form-group">
+                <label for="price">Offer_Price (₹) *</label>
+                <input type="number" id="offer_price" name="offer_price" value="{{ d.offer_price}}"  required>
             </div>
             <div class="form-group">
                 <label for="product_weight">Product Weight *</label>
-                <input type="text" id="product_weight" name="product_weight" value="{{ data.product_weight }}" required>
+                <input type="text" id="product_weight" name="product_weight" value="{{ d.product_weight }}" required>
             </div>
             <div class="form-group">
                 <label for="stock">Stock *</label>
-                <input type="number" id="stock" name="stock" value="{{ data.stock }}" required>
+                <input type="number" id="stock" name="stock" value="{{ d.stock }}" required>
             </div>
             <button type="submit" class="btn">Update</button>
         </form>
+        {% endfor %}
     </div>
 </body>
 </html>
