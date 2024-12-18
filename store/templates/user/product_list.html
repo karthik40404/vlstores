@@ -141,26 +141,26 @@
     <section class="product-list">
         <h2>{% if selected_category %}{{ selected_category.cat_name }}{% else %}All Products{% endif %}</h2>
         <div class="product-grid">
-            {% for product in products %}
-                <div class="product-card">
-                    <img src="{{ product.img.url }}" alt="{{ product.name }}">
-                    <p>{{ product.name }}</p>
-                    <p>{{ product.disc }}</p>
-                    
-                    <!-- Display price details -->
-                    {% for weight in product_weights %}
-                        {% if weight.product.id == product.id %}
-                            <p>Weight: {{ weight.product_weight }}</p>
-                            <p style="text-decoration: line-through;">Price: ₹{{ weight.price }}</p>
-                            <p >Offer Price: ₹{{ weight.offer_price }}</p>
-                            <p>Stock: {{ weight.stock }}</p>
-                            <button>Add to Cart</button>
-                        {% endif %}
-                    {% endfor %}
-                </div>
-            {% empty %}
-                <p>No products available in this category.</p>
-            {% endfor %}
+                {% for product in products %}
+                    <div class="product-card">
+                        <img src="{{ product.img.url }}" alt="{{ product.name }}">
+                        <p>{{ product.name }}</p>
+                        <p>{{ product.disc }}</p>
+                        
+                        <!-- Display price details -->
+                        {% for weight in product_weights %}
+                            {% if weight.product.id == product.id %}
+                                <p>Weight: {{ weight.product_weight }}</p>
+                                <p style="text-decoration: line-through;">Price: ₹{{ weight.price }}</p>
+                                <p >Offer Price: ₹{{ weight.offer_price }}</p>
+                                <p>Stock: {{ weight.stock }}</p>
+                                <button>Add to Cart</button>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% empty %}
+                    <p>No products available in this category.</p>
+                {% endfor %}
         </div>
     </section>
 

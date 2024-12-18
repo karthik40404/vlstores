@@ -17,5 +17,6 @@ urlpatterns = [
     path('addw', views.addws, name='add_weight'),
     path('editweight/<str:pid>/', views.editws, name='edit_weight'),
     path('products/<category_id>', views.product_list), 
-    path('search/', views.search_products, name='search_products')
+    path('search/', views.search_products, name='search_products'),
+    path('singlep/<pid>', views.single_product)
 ]

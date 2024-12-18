@@ -121,7 +121,7 @@
             {% if results %}
                 {% for product in results %}
                 <div class="product-card">
-                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                    <img src="{{ product.img.url }}" alt="{{ product.name }}">
                     <p>{{ product.name }}</p>
                     <p>{{ product.weight }} - ₹{{ product.price }}</p>
                     <button>Add</button>

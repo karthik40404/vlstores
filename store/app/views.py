@@ -187,5 +187,10 @@ def product_list(req, category_id):
 
 def search_products(req):
     query = req.GET.get('q', '')  
-    results = Product.objects.filter(name__icontains=query)  
+    results = Product.objects.filter(name__icontains=query)    
     return render(req, 'user/search_results.html', {'query': query, 'results': results})
+
+def single_product(req, pid):
+    product =Product.objects.get(pk=pid)
+    weights = Weight.objects.all()
+    return render(req, 'user/single.html', {'product': product, 'weights': weights})
