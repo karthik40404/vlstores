@@ -172,21 +172,13 @@ def dele_cat(req,cat_id):
 
 def uhome(req):
         if 'user' in req.session:
-            return render(req,'user/userhome.html')
+            category=Category.objects.all()
+            return render(req,'user/userhome.html',{'category':category})
         return redirect(log)
          
-def product_list(req, category_id=None):
-    categories = Category.objects.all()
-    if category_id:
-        selected_category = get_object_or_404(Category, id=category_id)
-        products = Product.objects.filter(cat_id=selected_category)
-    else:
-        selected_category = None
-        products = Product.objects.all()
-    product_weights = Weight.objects.filter(product__in=products)
-    return render(req, 'shop/viewproduct.html', {
-        'products': products,
-        'categories': categories,
-        'selected_category': selected_category,
-        'product_weights': product_weights
-    })
+def product_list(req, category_id):
+    selected_category=Category.objects.get(pk=category_id)
+    products=Product.objects.filter(cat_id=selected_category)
+    # categories= Category.objects.filter(cat_id=category_id)
+    product_weights=Weight.objects.filter(product__in=products)
+    return render(req, 'user/product_list.html', {'products': products,'selected_category': selected_category,'product_weights':product_weights})
