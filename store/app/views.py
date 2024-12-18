@@ -98,7 +98,7 @@ def addws(req):
             product_weight=req.POST['weight']
             product=req.POST['productname']
             pw=Product.objects.get(pk=product)
-            data=Weight.objects.create(stock=stock,product_weight=product_weight,product=pw,price=price, offer_price=offer_price)
+            data=Weight.objects.create(stock=stock,product_weight=product_weight,product=pw,price=price,offer_price=offer_price)
             data.save()
             return redirect(viewp)
         products=Product.objects.all()
@@ -107,23 +107,25 @@ def addws(req):
 
 def editws(req, pid):
     if 'shop' in req.session:
-        product=Product.objects.get(pk=pid)
+        product = get_object_or_404(Product, pk=pid)
         data = Weight.objects.filter(product=product)
 
         if req.method == 'POST':
-            product_weight = req.POST['product_weight']
-            stock = req.POST['stock']
-            price = req.POST['price']
-            offer_price = req.POST['offer_price']
-            data.product_weight = product_weight
-            data.stock = stock
-            data.price = price
-            data.offer_price = offer_price
-            return redirect(viewp) 
+            weight_id = req.POST.get('weight_id')
+            weight = get_object_or_404(Weight, id=weight_id)
+
+            # Update fields with form data
+            weight.product_weight = req.POST['product_weight']
+            weight.stock = req.POST['stock']
+            weight.price = req.POST['price']
+            weight.offer_price = req.POST['offer_price']
+            weight.save()
+
+            return redirect(viewp)  # Ensure 'viewp' is a valid URL or view name
 
         return render(req, 'shop/editweight.html', {'data': data})
 
-    return redirect('log')
+    return redirect('log') 
 
 
 def viewp(req):
@@ -151,10 +153,11 @@ def add_cat(req):
         if req.method=='POST':
             cat_name=req.POST['category_name']
             cat_name=cat_name.lower()
+            cat_image = req.FILES['category_image']
             try:
-                data=Category.objects.get(name=cat_name)
+                data=Category.objects.get(name=cat_name,cat_image=cat_image)
             except:
-                data= Category.objects.create(cat_name=cat_name)
+                data= Category.objects.create(cat_name=cat_name,cat_image=cat_image)
                 data.save()
                 print(data)
             return redirect(addp)
@@ -165,7 +168,7 @@ def add_cat(req):
     
 def dele_cat(req,cat_id):
     if 'shop' in req.session:
-        category = get_object_or_404(Category,pid=cat_id)
+        category = get_object_or_404(Category,id=cat_id)
         category.delete()
         return redirect(add_cat)
     return redirect(log) 
@@ -179,6 +182,10 @@ def uhome(req):
 def product_list(req, category_id):
     selected_category=Category.objects.get(pk=category_id)
     products=Product.objects.filter(cat_id=selected_category)
-    # categories= Category.objects.filter(cat_id=category_id)
     product_weights=Weight.objects.filter(product__in=products)
     return render(req, 'user/product_list.html', {'products': products,'selected_category': selected_category,'product_weights':product_weights})
+
+def search_products(req):
+    query = req.GET.get('q', '')  
+    results = Product.objects.filter(name__icontains=query)  
+    return render(req, 'user/search_results.html', {'query': query, 'results': results})

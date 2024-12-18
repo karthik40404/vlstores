@@ -4,129 +4,211 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
-    <title>Provision Store</title>
+    <title>VL Stores - Online Provision Store</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         /* General Styles */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', Arial, sans-serif;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            background-color: rgb(94, 182, 86);
+            background-color: #f5f5f5;
         }
         header {
-            background-color: #f56c0a;
+            background-color: #28a745;
             color: white;
             padding: 10px 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
         .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        .search-bar input {
-            padding: 8px;
-            border: none;
-            border-radius: 4px;
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
         }
+        .search-bar {
+            display: flex;
+            gap: 10px;
+        }
+        .search-bar input {
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            flex: 1;
+        }
+        .search-bar button {
+            background-color: #ffc107;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+        .search-bar button:hover {
+            background-color: #e0a800;
+        }
+        .user-options a {
+            color: white;
+            margin-left: 15px;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+        .user-options a:hover {
+            text-decoration: underline;
+        }
+
+        /* Banners */
         .banners {
             display: flex;
             justify-content: space-around;
             margin: 20px 0;
+            padding: 10px 0;
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
         .banner {
-            background-color: #ffd700;
-            padding: 20px;
+            background-color: #ffc107;
+            padding: 20px 30px;
             text-align: center;
-            border-radius: 5px;
+            border-radius: 10px;
             font-weight: bold;
+            font-size: 1.2rem;
+            color: #333;
+            transition: transform 0.3s;
         }
-        .categories h2, .product-list h2 {
+        .banner:hover {
+            transform: scale(1.1);
+        }
+
+        /* Categories */
+        .categories h2 {
             text-align: center;
-            margin: 20px 0;
+            margin: 30px 0;
+            font-size: 1.8rem;
+            color: #333;
         }
-        .category-grid, .product-grid {
+        .category-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            margin: 0 20px 20px;
-        }
-        .category-item, .product-card {
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            text-align: center;
-            padding: 10px;
-            background-color: #fff;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            gap: 20px;
+            padding: 0 20px;
         }
         .category-item {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            padding: 20px;
             background-color: #fff;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s;
+            text-decoration: none;
         }
-
         .category-item img {
-            width: 80px;
+            width: 100px;
             height: auto;
             margin-bottom: 10px;
         }
-
         .category-item p {
-            margin: 0;
-            font-size: 14px;
+            font-size: 1rem;
             font-weight: bold;
+            color: #333;
         }
-
         .category-item:hover {
-            transform: scale(1.05);
+            transform: translateY(-5px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
         }
 
-
+        /* Products */
+        .product-list h2 {
+            text-align: center;
+            margin: 30px 0;
+            font-size: 1.8rem;
+            color: #333;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 0 20px;
+        }
+        .product-card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            padding: 20px;
+            transition: transform 0.3s;
+        }
         .product-card img {
-            width: 100px;
+            width: 120px;
             height: auto;
+            margin-bottom: 15px;
+        }
+        .product-card p {
+            margin: 5px 0;
+            font-size: 1rem;
+            color: #333;
         }
         .product-card button {
-            background-color: #f56c0a;
+            background-color: #28a745;
             color: white;
             border: none;
-            padding: 8px 12px;
-            border-radius: 4px;
+            padding: 10px 20px;
+            border-radius: 8px;
             cursor: pointer;
+            font-size: 1rem;
         }
         .product-card button:hover {
-            background-color: #d84f09;
+            background-color: #218838;
         }
+
+        /* Footer */
         footer {
-            background-color: #222;
+            background-color: #343a40;
             color: white;
-            padding: 20px;
+            padding: 30px 20px;
             text-align: center;
+            margin-top: 30px;
         }
         .footer-content {
             display: flex;
             justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        .footer-column {
+            margin: 10px 0;
         }
         .footer-column h3 {
             margin-bottom: 10px;
+            font-size: 1.2rem;
+            color: #ffc107;
+        }
+        .footer-column p {
+            margin: 5px 0;
+            font-size: 0.9rem;
+            color: #ddd;
+        }
+        .footer-column p:hover {
+            color: #fff;
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            .navbar, .banners {
+            .navbar {
                 flex-direction: column;
                 text-align: center;
             }
+            .banners {
+                flex-direction: column;
+            }
             .footer-content {
                 flex-direction: column;
+                text-align: center;
             }
         }
     </style>
@@ -135,44 +217,40 @@
     <!-- Header -->
     <header>
         <nav class="navbar">
-            <div class="logo">vl stores</div>
+            <div class="logo">VL Stores</div>
             <div class="search-bar">
-                <input type="text" placeholder="Search for products...">
-                <button style="height: 45px; width: 45px; border-radius: 8px;">🔍</button>
+                <form action="search/" method="get" style="display: flex; gap: 10px;">
+                    <input type="text" name="q" placeholder="Search for products..." required>
+                    <button type="submit">🔍</button>
+                </form>
             </div>
             <div class="user-options">
-                <a href="#" class="cart-btn">🛒 Cart</a>
-                <a href="#" class="cart-btn">🛒 Cart</a>
-                <a href="#" class="cart-btn">🛒 Cart</a>
-                <a href="#" class="cart-btn">🛒 Cart</a>
-                <a href="lout" class="lout-btn">logout</a>
+                <a href="#">🛒 Cart</a>
+                <a href="lout">Logout</a>
             </div>
         </nav>
     </header>
 
     <!-- Offer Banners -->
     <section class="banners">
-        <div class="banner">UPTO 25% OFF</div>
-        <div class="banner">UPTO 19% OFF</div>
-        <div class="banner">UPTO 10% OFF</div>
-        <div class="banner">UPTO 50% OFF</div>
+        <div class="banner">UP TO 25% OFF</div>
+        <div class="banner">UP TO 19% OFF</div>
+        <div class="banner">UP TO 10% OFF</div>
+        <div class="banner">UP TO 50% OFF</div>
     </section>
 
-    <!-- Shop By Category -->
+    <!-- Categories -->
     <section class="categories">
         <h2>Shop By Category</h2>
         <div class="category-grid">
             {% for c in category %}
-            <a href="products/{{c.pk}}">
-            <div class="category-item">
-                    <img src="{% static 'images/fruits.png' %}" alt="{{ c.cat_name }}">
-                    <p>{{ c.cat_name }}</p>
-            </div>
+            <a href="products/{{ c.pk }}" class="category-item">
+                <img src="{{ c.cat_image.url }}" alt="{{ c.cat_name }}">
+                <p>{{ c.cat_name }}</p>
             </a>
             {% endfor %}
         </div>
     </section>
-    
 
     <!-- Product Listings -->
     <section class="product-list">
@@ -209,7 +287,7 @@
                 <p>Bakery & Dairy</p>
             </div>
         </div>
-        <p>&copy; 2024 vl stores</p>
+        <p>&copy; 2024 VL Stores</p>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

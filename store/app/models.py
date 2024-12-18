@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 class Category(models.Model):
      cat_name=models.TextField()
+     cat_image=models.FileField()
 
 class Product(models.Model):
      pid=models.TextField()

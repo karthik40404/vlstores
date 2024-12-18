@@ -151,8 +151,8 @@
                     {% for weight in product_weights %}
                         {% if weight.product.id == product.id %}
                             <p>Weight: {{ weight.product_weight }}</p>
-                            <p>Price: ₹{{ weight.price }}</p>
-                            <p>Offer Price: ₹{{ weight.offer_price }}</p>
+                            <p style="text-decoration: line-through;">Price: ₹{{ weight.price }}</p>
+                            <p >Offer Price: ₹{{ weight.offer_price }}</p>
                             <p>Stock: {{ weight.stock }}</p>
                             <button>Add to Cart</button>
                         {% endif %}
