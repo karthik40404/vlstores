@@ -192,5 +192,6 @@ def search_products(req):
 
 def single_product(req, pid):
     product =Product.objects.get(pk=pid)
-    weights = Weight.objects.all()
-    return render(req, 'user/single.html', {'product': product, 'weights': weights})
+    weights = Weight.objects.filter(product=product)
+    if 'user' in req.session:
+        return render(req, 'user/single.html', {'product': product, 'weights': weights})
