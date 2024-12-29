@@ -18,5 +18,7 @@ urlpatterns = [
     path('editweight/<str:pid>/', views.editws, name='edit_weight'),
     path('products/<int:category_id>/', views.product_list, name='product_list'),
     path('search/', views.search_products, name='search_products'),
-    path('singlep/<int:pid>/', views.single_product, name='single_product')
+    path('product/<int:pid>/', views.single_product, name='single_product'),
+    path('add-to-cart/<int:pid>/', views.add_to_cart, name='add_to_cart'),
+    path('buy-now/<int:pid>/', views.buy_now, name='buy_now'),
 ]

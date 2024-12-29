@@ -180,10 +180,25 @@ def uhome(req):
         return redirect(log)
          
 def product_list(req, category_id):
-    selected_category=Category.objects.get(pk=category_id)
-    products=Product.objects.filter(cat_id=selected_category)
-    product_weights=Weight.objects.filter(product__in=products)
-    return render(req, 'user/product_list.html', {'products': products,'selected_category': selected_category,'product_weights':product_weights})
+    selected_category = get_object_or_404(Category, pk=category_id)
+    products = Product.objects.filter(cat_id=selected_category)
+    product_weights = Weight.objects.filter(product__in=products)
+    selected_weights = {}
+
+    if req.method == "POST":
+        selected_product_id = int(req.POST.get("product_id"))
+        selected_weight = req.POST.get("weight")
+        selected_weights[selected_product_id] = selected_weight
+        # Redirect to the single product page with the selected product and weight
+        return redirect('single_product', pid=selected_product_id)
+
+    context = {
+        'products': products,
+        'selected_category': selected_category,
+        'product_weights': product_weights,
+        'selected_weights': selected_weights,
+    }
+    return render(req, 'user/product_list.html', context)
 
 def search_products(req):
     query = req.GET.get('q', '')  
@@ -191,7 +206,24 @@ def search_products(req):
     return render(req, 'user/search_results.html', {'query': query, 'results': results})
 
 def single_product(req, pid):
-    product =Product.objects.get(pk=pid)
+    product = get_object_or_404(Product, pk=pid)
     weights = Weight.objects.filter(product=product)
-    if 'user' in req.session:
-        return render(req, 'user/single.html', {'product': product, 'weights': weights})
+    selected_weight = req.GET.get('weight', None)
+
+    if selected_weight:
+        weight_details = weights.filter(product_weight=selected_weight).first()
+    else:
+        weight_details = None
+
+    context = {
+        'product': product,
+        'weights': weights,
+        'weight_details': weight_details
+    }
+    return render(req, 'user/single.html', context)
+
+def add_to_cart(req, pid):
+    pass
+
+def buy_now(req, pid):
+    pass
