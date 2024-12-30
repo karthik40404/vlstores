@@ -8,13 +8,13 @@
 </head>
 <body>
     <style>
-            body {
-        font-family: 'Arial', sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #f9f9f9;
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
         }
-
+    
         header {
             background-color: #f56c0a;
             color: white;
@@ -24,71 +24,68 @@
             align-items: center;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-
+    
         header .logo {
             font-size: 24px;
             font-weight: bold;
         }
-
+    
         main {
             padding: 20px;
         }
-
+    
         h1 {
             color: #333;
             text-align: center;
             margin-bottom: 30px;
         }
-
+    
         .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            display: flex;
+            flex-wrap: wrap;
             gap: 20px;
+            justify-content: center;
+            padding: 0;
         }
-
+    
         .product-card {
             background-color: #fff;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
             text-align: center;
-            padding: 20px;
+            width: 250px;
             transition: transform 0.3s, box-shadow 0.3s;
         }
-
+    
+        .product-card a {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+    
         .product-card img {
             width: 100%;
             height: auto;
-            max-height: 150px;
-            margin-bottom: 15px;
-            border-radius: 5px;
+            max-height: 180px;
+            object-fit: cover;
         }
-
-        .product-card p {
-            margin: 5px 0;
-            color: #555;
-            font-size: 14px;
+    
+        .product-info {
+            padding: 15px;
         }
-
-        .product-card button {
-            background-color: #f56c0a;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: background-color 0.3s ease-in-out;
+    
+        .product-info h2 {
+            font-size: 18px;
+            margin: 10px 0;
+            color: #333;
         }
-
-        .product-card button:hover {
-            background-color: #d84f09;
-        }
-
+    
         .product-card:hover {
             transform: scale(1.05);
             box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
         }
-
+        
         footer {
             background-color: #333;
             color: white;
@@ -96,20 +93,26 @@
             padding: 15px 0;
             margin-top: 20px;
         }
-
+    
         footer p {
             margin: 0;
             font-size: 14px;
         }
 
-        /* Responsive Design */
         @media (max-width: 768px) {
-            .product-grid {
-                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            .product-card {
+                width: 200px;
             }
         }
-
+    
+        @media (max-width: 480px) {
+            .product-card {
+                width: 100%;
+            }
+        }
     </style>
+    
+    
     <header>
         <nav class="navbar">
             <div class="logo">VL Stores</div>
@@ -120,18 +123,20 @@
         <div class="product-grid">
             {% if results %}
                 {% for product in results %}
-                <div class="product-card">
-                    <img src="{{ product.img.url }}" alt="{{ product.name }}">
-                    <p>{{ product.name }}</p>
-                    <p>{{ product.weight }} - ₹{{ product.price }}</p>
-                    <button>Add</button>
-                </div>
+                    <div class="product-card">
+                        <a href="{% url 'single_product' product.pk %}">
+                            <img src="{{ product.img.url }}" alt="{{ product.name }}">
+                            <div class="product-info">
+                                <h2>{{ product.name }}</h2>
+                            </div>
+                        </a>
+                    </div>
                 {% endfor %}
             {% else %}
-                <p>No products found for "{{ query }}".</p>
+                <p>No results found.</p>
             {% endif %}
         </div>
-    </main>
+    </main>    
     <footer>
         <p>&copy; 2024 VL Stores</p>
     </footer>
