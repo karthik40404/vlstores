@@ -173,40 +173,37 @@
             <p>{{ product.disc }}</p>
 
             <h2>Choose Weight:</h2>
-            <form method="get">
+            <form method="GET">
                 <select name="weight" onchange="this.form.submit()">
                     <option value="">Select weight</option>
                     {% for weight in weights %}
-                        <option value="{{ weight.product_weight }}" {% if weight.product_weight == selected_weight %}selected{% endif %}>
+                        <option value="{{ weight.id }}" {% if weight.id|stringformat:"s" == selected_weight %}selected{% endif %}>
                             {{ weight.product_weight }}
                         </option>
                     {% endfor %}
                 </select>
             </form>
-
+            
             {% if weight_details %}
                 <p style="text-decoration: line-through;">Price: ₹{{ weight_details.price }}</p>
                 <p>Offer Price: ₹{{ weight_details.offer_price }}</p>
-
-                <!-- Button container for Add to Cart and Buy Now buttons -->
+            
                 <div class="button-container">
-                    <!-- Button to add to cart -->
-                    <form method="POST" action="{% url 'add_to_cart' product.id %}">
+                    <!-- Add to Cart -->
+                    <form method="POST" action="{% url 'add_to_cart' pid=product.id weight_id=weight_details.id %}">
                         {% csrf_token %}
-                        <input type="hidden" name="weight" value="{{ weight_details.product_weight }}">
                         <button type="submit">Add to Cart</button>
                     </form>
-
-                    <!-- Button to buy -->
-                    <form method="POST" action="{% url 'buy_now' product.id %}">
+            
+                    <!-- Buy Now -->
+                    <form method="POST" action="{% url 'buy_now' pid=product.id weight_id=weight_details.id %}">
                         {% csrf_token %}
-                        <input type="hidden" name="weight" value="{{ weight_details.product_weight }}">
                         <button type="submit">Buy Now</button>
                     </form>
                 </div>
             {% else %}
                 <p>Please select a weight to view the details.</p>
-            {% endif %}
+            {% endif %}            
         </div>
     </div>
 </body>

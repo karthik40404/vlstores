@@ -210,10 +210,9 @@ def single_product(req, pid):
     weights = Weight.objects.filter(product=product)
     selected_weight = req.GET.get('weight', None)
 
+    weight_details = None
     if selected_weight:
-        weight_details = weights.filter(product_weight=selected_weight).first()
-    else:
-        weight_details = None
+        weight_details = weights.filter(pk=selected_weight).first()
 
     context = {
         'product': product,
@@ -222,7 +221,46 @@ def single_product(req, pid):
     }
     return render(req, 'user/single.html', context)
 
-def add_to_cart(req, pid):
+def add_to_cart(req, pid, weight_id):
+    product=Product.objects.get(pk=pid)
+    weight=Weight.objects.get(pk=weight_id)
+    user=User.objects.get(username=req.session['user'])
+    try:
+        cart=Cart.objects.get(user=user,product=product,weight=weight)
+        cart.qty+=1
+        cart.save()
+    except:
+        data=Cart.objects.create(product=product,weight=weight,user=user,qty=1)
+        data.save()
+    return redirect(cart_page)
+pass
+
+def cart_page(req):
+    user = req.user
+    cart = Cart.objects.filter(user=user)[::-1]
+    return render(req, 'user/cart.html', {'cart': cart})
+
+def qin(req, pk):
+    item = get_object_or_404(Cart, pk=pk, user=req.user)
+    item.qty += 1
+    item.save()
+    return redirect(cart_page)
+
+def qout(req, pk):
+    item = get_object_or_404(Cart, pk=pk, user=req.user)
+    if item.qty > 1:
+        item.qty -= 1
+        item.save()
+    else:
+        item.delete()
+    return redirect(cart_page)
+
+def cart_remove(req, pk):
+    item = get_object_or_404(Cart, pk=pk, user=req.user)
+    item.delete()
+    return redirect(cart_page)
+
+def checkout(req):
     pass
 
 def buy_now(req, pid):

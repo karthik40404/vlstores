@@ -23,5 +23,6 @@ class Weight(models.Model):
 class Cart(models.Model):
      product=models.ForeignKey(Product,on_delete=models.CASCADE)
      user=models.ForeignKey(User,on_delete=models.CASCADE)
+     weight=models.ForeignKey(Weight,on_delete=models.CASCADE)
      qty=models.IntegerField()
 
