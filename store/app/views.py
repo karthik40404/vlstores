@@ -189,7 +189,6 @@ def product_list(req, category_id):
         selected_product_id = int(req.POST.get("product_id"))
         selected_weight = req.POST.get("weight")
         selected_weights[selected_product_id] = selected_weight
-        # Redirect to the single product page with the selected product and weight
         return redirect('single_product', pid=selected_product_id)
 
     context = {
@@ -260,8 +259,33 @@ def cart_remove(req, pk):
     item.delete()
     return redirect(cart_page)
 
-def checkout(req):
-    pass
+def order_details(req):
+    # Fetch the user's cart items
+    cart = Cart.objects.filter(user=req.user)
+    
+    # Prepare cart items with calculated totals
+    cart_items = [
+        {
+            'product': item.product,
+            'weight': item.weight,
+            'qty': item.qty,
+            'price': item.weight.offer_price,
+            'total': item.weight.offer_price * item.qty,
+        }
+        for item in cart
+    ]
+    
+    # Calculate cart total
+    cart_total = sum(item['total'] for item in cart_items)
+
+    # Redirect if the cart is empty
+    if not cart.exists():
+        return redirect('cart_page')  # Replace with your cart page name
+
+    return render(req, 'user/orderdetails.html', {
+        'cart': cart_items,
+        'cart_total': cart_total,
+    })
 
 def buy_now(req, pid):
     pass

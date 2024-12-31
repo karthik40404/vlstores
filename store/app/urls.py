@@ -25,5 +25,5 @@ urlpatterns = [
     path('qout/<int:pk>/', views.qout, name='qout'),
     path('qin/<int:pk>/', views.qin, name='qin'),
     path('cart/remove/<int:pk>/', views.cart_remove, name='cart_remove'),
-    path('checkout/', views.checkout, name='checkout'),
+    path('order-details/', views.order_details, name='orderdetails'),
 ]
