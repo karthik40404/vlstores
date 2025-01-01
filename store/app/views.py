@@ -236,8 +236,10 @@ pass
 
 def cart_page(req):
     user = req.user
-    cart = Cart.objects.filter(user=user)[::-1]
-    return render(req, 'user/cart.html', {'cart': cart})
+    cart = Cart.objects.filter(user=user)
+    if not cart:  
+        return redirect(uhome) 
+    return render(req, 'user/cart.html', {'cart': cart[::-1]})
 
 def qin(req, pk):
     item = get_object_or_404(Cart, pk=pk, user=req.user)
