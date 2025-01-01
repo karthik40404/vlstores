@@ -262,10 +262,7 @@ def cart_remove(req, pk):
     return redirect(cart_page)
 
 def order_details(req):
-    # Fetch the user's cart items
     cart = Cart.objects.filter(user=req.user)
-    
-    # Prepare cart items with calculated totals
     cart_items = [
         {
             'product': item.product,
@@ -277,12 +274,10 @@ def order_details(req):
         for item in cart
     ]
     
-    # Calculate cart total
     cart_total = sum(item['total'] for item in cart_items)
 
-    # Redirect if the cart is empty
     if not cart.exists():
-        return redirect('cart_page')  # Replace with your cart page name
+        return redirect('cart_page')
 
     return render(req, 'user/orderdetails.html', {
         'cart': cart_items,
@@ -291,3 +286,6 @@ def order_details(req):
 
 def buy_now(req, pid):
     pass
+
+def buy(req):
+    return render(req,'user/buy.html')
