@@ -17,7 +17,7 @@
         header {
             background-color: #28a745;
             color: white;
-            padding: 10px 20px;
+            padding: 5px 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
         .navbar {
@@ -28,8 +28,8 @@
         }
 
         .lo {
-            max-width: 120px;
-            height: auto;
+            height: 100px;
+            width:100px;
             border-radius: 50%;
         }
 
@@ -244,7 +244,75 @@
                 flex-direction: column;
                 text-align: center;
             }
+
+        /* Responsive Design for Smaller Screens */
+        @media (max-width: 576px) {
+            .navbar {
+                flex-direction: column;
+                text-align: center;
+                gap: 5px; /* Reduce gap between navbar items */
+            }
+
+            .search-bar {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .search-bar input, .search-bar button {
+                font-size: 0.9rem; /* Smaller font size */
+                padding: 8px;
+            }
+
+            .banners {
+                flex-direction: column;
+                gap: 10px;
+                padding: 10px 5px;
+            }
+
+            .banner {
+                font-size: 1rem;
+                padding: 10px 15px;
+            }
+
+            .categories h2, .product-list h2 {
+                font-size: 1.5rem; /* Smaller heading size */
+                margin: 20px 0;
+            }
+
+            .category-item img {
+                width: 80px; /* Smaller category images */
+            }
+
+            .category-item p {
+                font-size: 0.9rem;
+            }
+
+            .product-card img {
+                width: 100px; /* Smaller product images */
+            }
+
+            .product-card p {
+                font-size: 0.9rem;
+            }
+
+            .product-card button {
+                font-size: 0.8rem;
+                padding: 8px 15px;
+            }
+
+            footer {
+                padding: 20px 10px;
+            }
+
+            .footer-column h3 {
+                font-size: 1rem;
+            }
+
+            .footer-column p {
+                font-size: 0.8rem;
+            }
         }
+    }
     </style>
 </head>
 <body>
