@@ -286,12 +286,25 @@ def order_details(req):
     return render(req, 'user/orderdetails.html', {'cart': cart_items,'cart_total': cart_total,})
     
 def buy_now(req):
-    pass
+    cart = Cart.objects.filter(user=req.user)
+    cart_items = [
+        {
+            'product': item.product,
+            'product_id': item.product.id,
+            'weight': item.weight,
+            'weight_id': item.weight.id,
+            'qty': item.qty,
+            'price': item.weight.offer_price,
+        }
+        for item in cart
+    ]
+    cart_price = sum(item['price'] for item in cart_items)
+
+    return render(req, 'user/buy.html',{'cart':cart_items,'cart_price': cart_price,})
+pass
 
 def buy(req):
     cart = Cart.objects.filter(user=req.user)
-
-
     cart_items = [
         {
             'product': item.product,
@@ -304,8 +317,6 @@ def buy(req):
         }
         for item in cart
     ]
-
-    
     cart_total = sum(item['total'] for item in cart_items)
 
     return render(req, 'user/buy.html',{'cart':cart_items,'cart_total': cart_total,})

@@ -196,7 +196,7 @@
                     </form>
             
                     <!-- Buy Now -->
-                    <form method="POST" action="{% url 'buy_now' pid=product.id weight_id=weight_details.id %}">
+                    <form method="POST" action="../buy">
                         {% csrf_token %}
                         <button type="submit">Buy Now</button>
                     </form>
