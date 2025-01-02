@@ -42,17 +42,17 @@
                     {% endfor %}
                 </tbody>
                 <tfoot>
-                    <tr>
-                        <th colspan="4" class="text-end">Cart Total:</th>
-                        <th colspan="2">₹{{ cart_total }}</th>
-                    </tr>
+                        <tr>
+                            <th colspan="4" class="text-end">Cart Total:</th>
+                            <th colspan="2">₹{{ cart_total|default:0 }}</th>
+                        </tr>        
                 </tfoot>
             </table>
 
             <!-- Payment Options -->
             <div class="mt-4">
                 <h4>Payment Options</h4>
-                <form method="POST" action="{% url 'process_payment' %}">
+                <form method="POST" action="pay">
                     {% csrf_token %}
                     <div class="mb-3">
                         <label for="payment_method" class="form-label">Select Payment Method</label>

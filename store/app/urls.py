@@ -26,5 +26,6 @@ urlpatterns = [
     path('qin/<int:pk>/', views.qin, name='qin'),
     path('cart/remove/<int:pk>/', views.cart_remove, name='cart_remove'),
     path('order-details/', views.order_details, name='orderdetails'),
-    path('buy/', views.buy, name='buy_page'),
+    path('buy/', views.buy, name='buy'),
+    path('pay/', views.payment, name='pay'),
 ]
