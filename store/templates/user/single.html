@@ -196,10 +196,11 @@
                     </form>
             
                     <!-- Buy Now -->
-                    <form method="POST" action="../buy">
+                    <!-- {% comment %} <form method="POST" action="../../buy-now">
                         {% csrf_token %}
                         <button type="submit">Buy Now</button>
-                    </form>
+                    </form> {% endcomment %} -->
+                    <a href="../../buy-now/{{weight_details.pk}}">Buy Now</a>
                 </div>
             {% else %}
                 <p>Please select a weight to view the details.</p>

@@ -262,10 +262,7 @@ def cart_remove(req, pk):
     return redirect(cart_page)
 
 def order_details(req):
-    cart = Cart.objects.filter(user=req.user)
-
-    if not cart.exists():
-        return redirect(cart_page)
+    cart = Cart.objects.filter(user=req.user)[::-1]
     
     cart_items = [
         {
@@ -285,23 +282,11 @@ def order_details(req):
 
     return render(req, 'user/orderdetails.html', {'cart': cart_items,'cart_total': cart_total,})
     
-def buy_now(req):
-    cart = Cart.objects.filter(user=req.user)
-    cart_items = [
-        {
-            'product': item.product,
-            'product_id': item.product.id,
-            'weight': item.weight,
-            'weight_id': item.weight.id,
-            'qty': item.qty,
-            'price': item.weight.offer_price,
-        }
-        for item in cart
-    ]
-    cart_price = sum(item['price'] for item in cart_items)
+def buy_now(req,wid):
+    weights = Weight.objects.get(pk=wid)
+    total_price = weights.offer_price 
 
-    return render(req, 'user/buy.html',{'cart':cart_items,'cart_price': cart_price,})
-pass
+    return render(req, 'user/buynow.html', {'weights': weights,'total_price': total_price,})
 
 def buy(req):
     cart = Cart.objects.filter(user=req.user)
