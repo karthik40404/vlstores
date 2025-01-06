@@ -207,7 +207,7 @@ def search_products(req):
 def single_product(req, pid):
     product = get_object_or_404(Product, pk=pid)
     weights = Weight.objects.filter(product=product)
-    selected_weight = req.GET.get('weight', None)
+    selected_weight = req.GET.get('weight', '')
 
     weight_details = None
     if selected_weight:
@@ -216,7 +216,8 @@ def single_product(req, pid):
     context = {
         'product': product,
         'weights': weights,
-        'weight_details': weight_details
+        'weight_details': weight_details,
+        'selected_weight': selected_weight
     }
     return render(req, 'user/single.html', context)
 

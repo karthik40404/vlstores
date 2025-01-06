@@ -174,7 +174,7 @@
 
             <h2>Choose Weight:</h2>
             <form method="GET">
-                <select name="weight" onchange="this.form.submit()">
+                <select name="weight" id="weight" onchange="this.form.submit()" class="form-select">
                     <option value="">Select weight</option>
                     {% for weight in weights %}
                         <option value="{{ weight.id }}" {% if weight.id|stringformat:"s" == selected_weight %}selected{% endif %}>
@@ -183,8 +183,9 @@
                     {% endfor %}
                 </select>
             </form>
-            
+                        
             {% if weight_details %}
+                <p>Weight: {{ weight_details.product_weight }}</p>
                 <p style="text-decoration: line-through;">Price: ₹{{ weight_details.price }}</p>
                 <p>Offer Price: ₹{{ weight_details.offer_price }}</p>
             
