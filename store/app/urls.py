@@ -27,5 +27,6 @@ urlpatterns = [
     path('order-details/', views.order_details, name='orderdetails'),
     path('buy-now/<int:wid>/', views.buy_now, name='buy_now'),
     path('buy/', views.buy, name='buy'),
-    path('pay/', views.payment, name='pay'),
+    path('booking-confirmation', views.booking_confirmation, name='booking_confirmation'),
+    path('shop/bookings/', views.admin_bookings, name='admin_bookings'),
 ]

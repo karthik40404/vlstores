@@ -27,9 +27,15 @@ class Cart(models.Model):
      qty=models.IntegerField()
 
 class Buy(models.Model):
+    PAYMENT_CHOICES = [
+        ('cod', 'Cash on Delivery'),
+        ('online', 'Online Payment'),
+    ]
     product=models.ForeignKey(Product,on_delete=models.CASCADE,null=True)
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     weight=models.ForeignKey(Weight,on_delete=models.CASCADE)
     qty=models.IntegerField()
     total_price=models.IntegerField()
     date=models.DateField(auto_now_add=True)
+    payment_method = models.CharField(max_length=10, choices=PAYMENT_CHOICES, default='cod')
+    billing_address = models.TextField(blank=True, null=True)

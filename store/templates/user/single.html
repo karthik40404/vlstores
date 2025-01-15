@@ -123,7 +123,22 @@
         button:hover {
             background-color: #45a049;
         }
-
+        .buy-now-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4caf50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .buy-now-btn:hover {
+            background-color: #45a049;
+            text-decoration: none;
+        }
+        
         /* Responsive Design */
         @media screen and (max-width: 768px) {
             .product-detail {
@@ -195,13 +210,7 @@
                         {% csrf_token %}
                         <button type="submit">Add to Cart</button>
                     </form>
-            
-                    <!-- Buy Now -->
-                    <!-- {% comment %} <form method="POST" action="../../buy-now">
-                        {% csrf_token %}
-                        <button type="submit">Buy Now</button>
-                    </form> {% endcomment %} -->
-                    <a href="../../buy-now/{{weight_details.pk}}">Buy Now</a>
+                    <a href="../../buy-now/{{ weight_details.pk }}" class="buy-now-btn">Buy Now</a>
                 </div>
             {% else %}
                 <p>Please select a weight to view the details.</p>

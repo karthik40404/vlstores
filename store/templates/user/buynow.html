@@ -22,10 +22,10 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>{{ weights.product.name }}</td>
-                    <td><img style="height: 100px;" src="{{ weights.product.img.url }}"></td>
-                    <td>{{ weights.product_weight }}</td>
-                    <td>₹{{ weights.offer_price }}</td>
+                    <td>{{ weight.product.name }}</td> 
+                    <td><img style="height: 100px;" src="{{ weight.product.img.url }}"></td>
+                    <td>{{ weight.product_weight }}</td>
+                    <td>₹{{ weight.offer_price }}</td>
                 </tr>
             </tbody>
         </table>
@@ -38,7 +38,7 @@
         <!-- Payment Form -->
         <div class="mt-4">
             <h4>Payment Options</h4>
-            <form method="POST" action="{% url 'pay' %}">
+            <form method="POST" action="">
                 {% csrf_token %}
                 <div class="mb-3">
                     <label for="payment_method" class="form-label">Select Payment Method</label>

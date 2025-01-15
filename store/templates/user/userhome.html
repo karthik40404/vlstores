@@ -95,28 +95,6 @@
             color: #ffffff; 
         }
 
-        /* Banners */
-        .banners {
-            display: flex;
-            justify-content: space-around;
-            margin: 20px 0;
-            padding: 10px 0;
-            background-color: #53b758;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .banner {
-            background-color: #ffc107;
-            padding: 20px 30px;
-            text-align: center;
-            border-radius: 10px;
-            font-weight: bold;
-            font-size: 1.2rem;
-            color: #333;
-            transition: transform 0.3s;
-        }
-        .banner:hover {
-            transform: scale(1.1);
-        }
         /* Categories */
         .categories h2 {
             text-align: center;
@@ -318,34 +296,42 @@
 <body>
     <!-- Header -->
     <header>
-        <nav class="navbar">
-            <div class="logo">
-                <img class="lo" src="{% static 'img/vl stores.png' %}" alt="Website Logo">
-            </div>
-            <div class="search-bar">
-                <form action="search/" method="get">
-                    <input type="text" name="q" placeholder="Search for products..." required>
-                    <button type="submit">🔍</button>
-                </form>
-            </div>
-            <div class="user-options">
-                <a href="./">Home</a>
-                <a href="#">About us</a>
-                <a href="#">Bookings</a>
-                <a href="cart">🛒 Cart</a>
-                <a href="#">Contact us</a>
-                <a href="lout">Logout</a>
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #28a745;">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <img class="lo" src="{% static 'img/vl stores.png' %}" alt="Website Logo">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="./">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="booking-confirmation">Bookings</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="cart">🛒 Cart</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#">Contact us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="lout">Logout</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
-    </header>
-
-    <!-- Offer Banners -->
-    <section class="banners">
-        <div class="banner">UP TO 25% OFF</div>
-        <div class="banner">UP TO 19% OFF</div>
-        <div class="banner">UP TO 10% OFF</div>
-        <div class="banner">UP TO 50% OFF</div>
-    </section>
+    </header>    
+    <div class="search-bar">
+        <form action="search/" method="get">
+            <input type="text" name="q" placeholder="Search for products..." required>
+            <button type="submit">🔍</button>
+        </form>
+    </div>
 
     <!-- Categories -->
     <section class="categories">
@@ -357,25 +343,6 @@
                 <p>{{ c.cat_name }}</p>
             </a>
             {% endfor %}
-        </div>
-    </section>
-
-    <!-- Product Listings -->
-    <section class="product-list">
-        <h2>Sugar, Salt & Grains</h2>
-        <div class="product-grid">
-            <div class="product-card">
-                <img src="{% static 'images/product1.png' %}" alt="Product Image">
-                <p>Natural Uzhunnu</p>
-                <p>500 gm - ₹87.4</p>
-                <button>Add</button>
-            </div>
-            <div class="product-card">
-                <img src="{% static 'images/product2.png' %}" alt="Product Image">
-                <p>Basmati Rice</p>
-                <p>1 kg - ₹120.5</p>
-                <button>Add</button>
-            </div>
         </div>
     </section>
 

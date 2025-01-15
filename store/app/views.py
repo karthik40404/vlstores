@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import user_passes_test
 from django.contrib import messages
 from .models import *
 import os
@@ -283,13 +284,56 @@ def order_details(req):
 
     return render(req, 'user/orderdetails.html', {'cart': cart_items,'cart_total': cart_total,})
     
-def buy_now(req,wid):
-    weights = Weight.objects.get(pk=wid)
-    total_price = weights.offer_price 
+def buy_now(req, wid):
+    if req.method == 'POST':
+        payment_method = req.POST.get('payment_method')
+        billing_address = req.POST.get('billing_address')
+        weight = Weight.objects.get(pk=wid)  
+        product = weight.product 
+        total_price = weight.offer_price  
 
-    return render(req, 'user/buynow.html', {'weights': weights,'total_price': total_price,})
+        qty=1
+        
+        Buy.objects.create(
+            user=req.user,
+            product=product,
+            weight=weight,  
+            total_price=total_price,
+            qty=qty,
+            payment_method=payment_method,  
+            billing_address=billing_address,
+        )
+        return redirect('booking_confirmation') 
+
+    weight = Weight.objects.get(pk=wid)
+    total_price = weight.offer_price
+    return render(req, 'user/buynow.html', {'weight': weight, 'total_price': total_price})
 
 def buy(req):
+    if req.method == 'POST':
+        payment_method = req.POST.get('payment_method')
+        billing_address = req.POST.get('billing_address')
+
+        cart = Cart.objects.filter(user=req.user)
+        if not cart.exists():
+            return redirect('cart_page')
+
+        for item in cart:
+            total_price = item.weight.offer_price * item.qty
+            Buy.objects.create(
+                user=req.user,
+                product=item.product,
+                weight=item.weight,
+                qty=item.qty,
+                total_price=total_price,
+                payment_method=payment_method,  
+                billing_address=billing_address,
+            )
+        
+        cart.delete()
+        return redirect('booking_confirmation')
+
+    
     cart = Cart.objects.filter(user=req.user)
     cart_items = [
         {
@@ -304,8 +348,13 @@ def buy(req):
         for item in cart
     ]
     cart_total = sum(item['total'] for item in cart_items)
+    return render(req, 'user/buy.html', {'cart': cart_items, 'cart_total': cart_total})
 
-    return render(req, 'user/buy.html',{'cart':cart_items,'cart_total': cart_total,})
+def booking_confirmation(req):
+    bookings = Buy.objects.filter(user=req.user).order_by('-date')
+    return render(req, 'user/booking_confirmation.html', {'bookings': bookings})
 
-def payment(req):
-    pass
+@user_passes_test(lambda u: u.is_superuser)
+def admin_bookings(req):
+    bookings = Buy.objects.all().order_by('-date')
+    return render(req, 'shop/bookings.html', {'bookings': bookings})
